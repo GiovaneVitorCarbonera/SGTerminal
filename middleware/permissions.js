@@ -1,6 +1,6 @@
-const PERMISSIONS = {
+const PERMISSIONS = Object.freeze({
   CREATE_USER: 'CREATE_USER',
-  GET_USERS: 'GET_USERS',
+  GET_ALL_USER: 'GET_ALL_USER',
   GET_USER: 'GET_USER',
   DELETE_USER: 'DELETE_USER',
   EDIT_USER: 'EDIT_USER',
@@ -9,7 +9,7 @@ const PERMISSIONS = {
   GET_VEHICLE_MOVEMENT: 'GET_VEHICLE_MOVEMENT',
   DELETE_VEHICLE_MOVEMENT: 'DELETE_VEHICLE_MOVEMENT',
   EDIT_VEHICLE_MOVEMENT: 'EDIT_VEHICLE_MOVEMENT'
-};
+});
 
 const requirePermission = (allowedPermissions = []) => {
   return (req, res, next) => {

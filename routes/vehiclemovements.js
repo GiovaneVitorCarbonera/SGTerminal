@@ -5,6 +5,65 @@ const db = require('../services/DBService.js');
 const { secureRoute } = require('../middleware/auth');
 const { requirePermission, PERMISSIONS } = require('../middleware/permissions');
 
+/**
+ * @openapi
+ * /vehicle-movements:
+ *   post:
+ *     summary: Cria um novo registro de movimentação de veículo
+ *     tags:
+ *       - Vehicle-Movements
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - idAccount
+ *               - placa
+ *               - datahora
+ *               - tipo
+ *             properties:
+ *               idAccount:
+ *                 type: integer
+ *                 example: 1
+ *               placa:
+ *                 type: string
+ *                 example: ABC1D23
+ *               datahora:
+ *                 type: string
+ *                 format: date-time
+ *                 example: 2026-06-03T12:30:00Z
+ *               tipo:
+ *                 type: string
+ *                 example: ENTRADA
+ *     responses:
+ *       201:
+ *         description: Veículo cadastrado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensagem:
+ *                   type: string
+ *                   example: Veiculo cadastrado
+ *                 id:
+ *                   type: integer
+ *                   example: 10
+ *       500:
+ *         description: Erro no cadastro
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 erro:
+ *                   type: string
+ *                   example: Erro no cadastro
+ */
 router.post('/', secureRoute, requirePermission([PERMISSIONS.CREATE_VEHICLE_MOVEMENT]), async (req, res) => {
     const {idAccount, placa, datahora, tipo} = req.body;
 
@@ -26,6 +85,20 @@ router.post('/', secureRoute, requirePermission([PERMISSIONS.CREATE_VEHICLE_MOVE
     }
 });
 
+/**
+ * @openapi
+ * /vehicle-movements:
+ *   get:
+ *     tags:
+ *       - Vehicle-Movements
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista movimentação de veículos
+ *       500:
+ *         description: Falha ao buscar
+ */
 router.get('/', secureRoute, requirePermission([PERMISSIONS.GET_ALL_VEHICLE_MOVEMENT]), async (req, res) => {
     const sql = 'select * from veiculos';
 
@@ -40,6 +113,28 @@ router.get('/', secureRoute, requirePermission([PERMISSIONS.GET_ALL_VEHICLE_MOVE
     }
 });
 
+/**
+ * @openapi
+ * /vehicle-movements/{id}:
+ *   get:
+ *     tags:
+ *       - Vehicle-Movements
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Movimentação de veículo
+ *       404:
+ *         description: Veículo não encontrado
+ *       500:
+ *         description: Falha na busca do veículo
+ */
 router.get('/:id', secureRoute, requirePermission([PERMISSIONS.GET_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
 
@@ -63,6 +158,28 @@ router.get('/:id', secureRoute, requirePermission([PERMISSIONS.GET_VEHICLE_MOVEM
     }
 });
 
+/**
+ * @openapi
+ * /vehicle-movements/{id}:
+ *   delete:
+ *     tags:
+ *       - Vehicle-Movements
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Veículo deletado do sistema
+ *       404:
+ *         description: Veículo não encontrado
+ *       500:
+ *         description: Falha ao remover
+ */
 router.delete('/:id', secureRoute, requirePermission([PERMISSIONS.DELETE_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
 
@@ -89,6 +206,43 @@ router.delete('/:id', secureRoute, requirePermission([PERMISSIONS.DELETE_VEHICLE
     }
 });
 
+/**
+ * @openapi
+ * /vehicle-movements/{id}:
+ *   put:
+ *     tags:
+ *       - Vehicle-Movements
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idAccount:
+ *                 type: integer
+ *               placa:
+ *                 type: string
+ *               datahora:
+ *                 type: string
+ *               tipo:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Veículo atualizado
+ *       404:
+ *         description: Veículo não encontrado
+ *       500:
+ *         description: Falha na atualização
+ */
 router.put('/:id', secureRoute, requirePermission([PERMISSIONS.EDIT_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
     const {idAccount, placa, datahora, tipo} = req.body;

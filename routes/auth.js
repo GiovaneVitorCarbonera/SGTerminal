@@ -2,8 +2,29 @@ const express = require('express');
 const router = express.Router();
 const db = require('../services/DBService.js');
 const jwt = require('jsonwebtoken');
-const { segredo } = require('../middleware/auth');
+const { secret } = require('../middleware/auth');
 
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     description: Login e geração de JWT
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [usuario, senha]
+ *             properties:
+ *               usuario:
+ *                 type: string
+ *               senha:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Token JWT
+ */
 router.post('/login', async (req, res) => {
   const { usuario, senha } = req.body;
 
@@ -13,7 +34,7 @@ router.post('/login', async (req, res) => {
 
   try {
     const query = `
-      SELECT id, usuario
+      SELECT id, permissions
       FROM accounts
       WHERE username = $1 AND password_hash = $2
       LIMIT 1
@@ -26,10 +47,16 @@ router.post('/login', async (req, res) => {
     }
 
     const user = result.rows[0];
+    if (typeof user.permissions === 'string') {
+      user.permissions = user.permissions
+        .replace(/[{}]/g, '')
+        .split(',')
+        .map(p => p.trim());
+    }
 
     const token = jwt.sign(
       { id: user.id, permissions: user.permissions },
-      segredo,
+      secret,
       { expiresIn: '1h' }
     );
 

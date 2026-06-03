@@ -4,6 +4,35 @@ const db = require('../services/DBService.js');
 const { secureRoute } = require('../middleware/auth');
 const { requirePermission, PERMISSIONS } = require('../middleware/permissions');
 
+/**
+ * @openapi
+ * /accounts:
+ *   post:
+ *     tags:
+ *       - Accounts
+ *     security:
+ *       - bearerAuth: []
+ *     description: Cria conta
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [username, password_hash, permissions]
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password_hash:
+ *                 type: string
+ *               permissions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Criado
+ */
 router.post(
   '/',
   secureRoute,
@@ -34,10 +63,22 @@ router.post(
   }
 );
 
+/**
+ * @openapi
+ * /accounts:
+ *   get:
+ *     tags:
+ *       - Accounts
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista contas
+ */
 router.get(
   '/',
   secureRoute,
-  requirePermission([PERMISSIONS.GET_USERS]),
+  requirePermission([PERMISSIONS.GET_ALL_USER]),
   async (req, res) => {
     try {
       const result = await db.query(`
@@ -54,6 +95,24 @@ router.get(
   }
 );
 
+/**
+ * @openapi
+ * /accounts/{Id}:
+ *   get:
+ *     tags:
+ *       - Accounts
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: Id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Lista contas
+ */
 router.get(
   '/:Id',
   secureRoute,
@@ -87,6 +146,31 @@ router.get(
   }
 );
 
+/**
+ * @openapi
+ * /accounts/{Id}:
+ *   delete:
+ *     tags:
+ *       - Accounts
+ *     summary: Remove uma conta
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: Id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Conta removida com sucesso
+ *       400:
+ *         description: ID inválido
+ *       404:
+ *         description: Conta não encontrada
+ *       500:
+ *         description: Erro interno
+ */
 router.delete(
   '/:Id',
   secureRoute,
@@ -120,6 +204,26 @@ router.delete(
   }
 );
 
+/**
+ * @openapi
+ * /accounts/{Id}:
+ *   put:
+ *     tags:
+ *       - Accounts
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: Id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *     responses:
+ *       200:
+ *         description: Lista contas
+ */
 router.put(
   '/:Id',
   secureRoute,
