@@ -18,4 +18,11 @@ CREATE TABLE accounts (
     permissions account_permission[] NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE veiculos (
+    id SERIAL PRIMARY KEY,
+    placa VARCHAR(10) NOT NULL,
+    datahora TIMESTAMP NOT NULL,
+    tipo VARCHAR(50) NOT NULL
+);
 ```
