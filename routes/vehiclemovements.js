@@ -1,14 +1,17 @@
 const express = require('express');
 
 const router = express.Router();
+const db = require('../services/DBService.js');
+const { secureRoute } = require('../middleware/auth');
+const { requirePermission, PERMISSIONS } = require('../middleware/permissions');
 
-router.post('/', async (req, res) => {
+router.post('/', secureRoute, requirePermission([PERMISSIONS.CREATE_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id, placa, datahora, tipo} = req.body;
 
     const sql = 'INSERT INTO veiculos (id, placa, datahora, tipo) VALUES ($1, $2, $3, $4) RETURNING id;';
 
     try{
-        const resultado = await pool.query(sql, [id, placa, datahora, tipo]);
+        const resultado = await db.query(sql, [id, placa, datahora, tipo]);
 
         res.status(201).json({
             mensagem: 'Veiculo cadastrado', 
@@ -23,11 +26,11 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', secureRoute, requirePermission([PERMISSIONS.GET_ALL_VEHICLE_MOVEMENT]), async (req, res) => {
     const sql = 'select * from veiculos';
 
     try{
-        const resultado = await pool.query(sql);
+        const resultado = await db.query(sql);
 
         res.json(resultado.rows);
     }catch(erro){
@@ -37,13 +40,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', secureRoute, requirePermission([PERMISSIONS.GET_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
 
     const sql = 'select * from veiculos where id = $1';
 
     try{
-        const resultado = await pool.query(sql, [id]);
+        const resultado = await db.query(sql, [id]);
 
         if(resultado.rows.length === 0){
             return res.status(404).json({
@@ -60,13 +63,13 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', secureRoute, requirePermission([PERMISSIONS.DELETE_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
 
     const sql = 'delete from veiculos where id = $1';
 
     try{
-        const resultado = await pool.query(sql, [id]);
+        const resultado = await db.query(sql, [id]);
 
         if(resultado.rowCout === 0){
             return res.status(404).json({
@@ -86,14 +89,14 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', secureRoute, requirePermission([PERMISSIONS.EDIT_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
     const {id, placa, datahora, tipo} = req.body;
 
     const sql = 'update veiculos set id = $1 placa = $2 datahora = $3 tipo = $4';
 
     try{
-        const resultado = await pool.query(sql, [id, placa, datahora, tipo]);
+        const resultado = await db.query(sql, [id, placa, datahora, tipo]);
 
         if(resultado.rowCout === 0){
             return res.status(404).json({
