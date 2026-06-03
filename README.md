@@ -2,6 +2,7 @@
 
 SQL Init
 
+```
 CREATE TYPE account_permission AS ENUM (
   'CREATE_USER',
   'GET_USERS',
@@ -17,3 +18,4 @@ CREATE TABLE accounts (
     permissions account_permission[] NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
