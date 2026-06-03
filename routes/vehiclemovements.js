@@ -78,7 +78,7 @@ router.delete('/:id', secureRoute, requirePermission([PERMISSIONS.DELETE_VEHICLE
         }
 
         res.json({
-            mansagem: 'Veiculos deletado do sistema'
+            mansagem: 'Veiculo deletado do sistema'
         });
 
 
