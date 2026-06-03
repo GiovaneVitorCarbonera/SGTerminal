@@ -6,16 +6,16 @@ const { secureRoute } = require('../middleware/auth');
 const { requirePermission, PERMISSIONS } = require('../middleware/permissions');
 
 router.post('/', secureRoute, requirePermission([PERMISSIONS.CREATE_VEHICLE_MOVEMENT]), async (req, res) => {
-    const {id, placa, datahora, tipo} = req.body;
+    const {idAccount, placa, datahora, tipo} = req.body;
 
-    const sql = 'INSERT INTO veiculos (id, placa, datahora, tipo) VALUES ($1, $2, $3, $4) RETURNING id;';
+    const sql = 'INSERT INTO veiculos (idAccount, placa, datahora, tipo) VALUES ($1, $2, $3, $4) RETURNING idAccount;';
 
     try{
-        const resultado = await db.query(sql, [id, placa, datahora, tipo]);
+        const resultado = await db.query(sql, [idAccount, placa, datahora, tipo]);
 
         res.status(201).json({
             mensagem: 'Veiculo cadastrado', 
-            idIserido: resultado.rows[0].id
+            idIserido: resultado.rows[0].idAccount
         }); 
     }catch(erro) {
         console.error(erro);
@@ -91,12 +91,12 @@ router.delete('/:id', secureRoute, requirePermission([PERMISSIONS.DELETE_VEHICLE
 
 router.put('/:id', secureRoute, requirePermission([PERMISSIONS.EDIT_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
-    const {id, placa, datahora, tipo} = req.body;
+    const {idAccount, placa, datahora, tipo} = req.body;
 
-    const sql = 'update veiculos set id = $1 placa = $2 datahora = $3 tipo = $4';
+    const sql = 'update veiculos set id = $1, idAccount = $2 placa = $3 datahora = $4 tipo = $5';
 
     try{
-        const resultado = await db.query(sql, [id, placa, datahora, tipo]);
+        const resultado = await db.query(sql, [id, idAccount, placa, datahora, tipo]);
 
         if(resultado.rowCout === 0){
             return res.status(404).json({
