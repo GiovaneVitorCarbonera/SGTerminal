@@ -28,6 +28,10 @@ CREATE TABLE veiculos (
     id SERIAL PRIMARY KEY,
     placa VARCHAR(10) NOT NULL,
     datahora TIMESTAMP NOT NULL,
-    tipo VARCHAR(50) NOT NULL
+    tipo VARCHAR(50) NOT NULL,
+	  idaccount int not null
 );
 ```
+
+DER IMAGE
+<img width="1202" height="181" alt="SG Terminal DER" src="https://github.com/user-attachments/assets/b5a5c4de-206b-400b-8a31-015958789620" />
