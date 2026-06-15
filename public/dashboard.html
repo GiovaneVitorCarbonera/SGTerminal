@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestão Integrada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dashboard">
+
+    <div class="d-flex min-vh-100">
+        <aside class="sidebar-wrapper d-flex flex-column flex-shrink-0 p-3 border-end border-secondary-subtle">
+            <div class="d-flex align-items-center mb-4 ps-2 gap-2">
+                <i class="bi bi-leaf text-success fs-4"></i>
+                <span class="fs-5 fw-bold tracking-tight">bonsai</span>
+            </div>
+            
+            <ul class="nav nav-pills flex-column mb-auto gap-1" id="sidebar-menu">
+                <li class="nav-label mt-2 mb-1 ps-2 text-uppercase text-secondary xs-heading">Geral</li>
+                <li>
+                    <a href="#" class="nav-link active d-flex align-items-center gap-2 py-2" data-target="dashboard-home">
+                        <i class="bi bi-grid-1x2"></i> Dashboard
+                    </a>
+                </li>
+                
+                <li class="nav-label mt-3 mb-1 ps-2 text-uppercase text-secondary xs-heading">Ferramentas</li>
+                <li>
+                    <a href="#" class="nav-link d-flex align-items-center gap-2 py-2" data-target="accounts-section">
+                        <i class="bi bi-people"></i> Contas (Accounts)
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link d-flex align-items-center gap-2 py-2" data-target="movements-section">
+                        <i class="bi bi-car-front"></i> Movimentações
+                    </a>
+                </li>
+            </ul>
+            
+            <hr class="my-3 border-secondary-subtle">
+            
+            <div class="dropdown ps-2">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-light" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle fs-5 me-2"></i>
+                    <strong id="user-display">Operador</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary-subtle">
+                    <li><a class="dropdown-menu-item dropdown-item text-danger" href="#" id="btn-logout"><i class="bi bi-box-arrow-left me-2"></i>Sair</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="flex-grow-1 p-4 overflow-y-auto" style="height: 100vh;">
+            <header class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary-subtle">
+                <div class="input-group w-25" style="min-width: 250px;">
+                    <span class="input-group-text bg-transparent border-end-0 border-secondary-subtle"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" id="global-search" class="form-control bg-transparent border-start-0 border-secondary-subtle" placeholder="Search...">
+                </div>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-success-subtle text-success border border-success d-flex align-items-center px-3 py-2 rounded-pill small">
+                        <i class="bi bi-circle-fill me-2 fs-xs text-success"></i> JWT Autenticado
+                    </span>
+                </div>
+            </header>
+
+            <div id="dashboard-alert" class="alert alert-dismissible d-none" role="alert">
+                <span id="alert-message"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="none" onclick="this.parentElement.classList.add('d-none')"></button>
+            </div>
+
+            <section id="dashboard-home" class="content-view">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="card bg-card border-secondary-subtle p-4 h-100">
+                            <h6 class="text-secondary mb-2 text-uppercase">Total de Contas</h6>
+                            <h2 class="fw-bold mb-0" id="count-accounts">-</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-card border-secondary-subtle p-4 h-100">
+                            <h6 class="text-secondary mb-2 text-uppercase">Movimentações Registradas</h6>
+                            <h2 class="fw-bold mb-0" id="count-movements">-</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="crud-section" class="content-view d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 id="section-title" class="fw-bold m-0">Serviços</h2>
+                        <nav class="nav mt-2 sub-tab-nav" id="section-subtabs">
+                            <a class="nav-link active p-0 pb-1 me-3" href="#">Listagem</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <button class="btn btn-success px-4 py-2 fw-medium rounded" id="btn-trigger-add">
+                            <i class="bi bi-plus-lg me-1"></i> <span id="btn-add-label">Novo Registro</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card bg-transparent border-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle custom-dashboard-table" id="main-data-table">
+                            <thead class="table-light-header">
+                                <tr id="table-headers">
+                                    </tr>
+                            </thead>
+                            <tbody id="table-body" class="border-top-0">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="crudModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-card border border-secondary-subtle">
+                <div class="modal-header border-bottom border-secondary-subtle">
+                    <h5 class="modal-title fw-bold" id="crudModalLabel">Adicionar Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="modal-form">
+                    <div class="modal-body" id="modal-form-body">
+                        </div>
+                    <div class="modal-footer border-top border-secondary-subtle">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success px-3">Salvar Registro</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

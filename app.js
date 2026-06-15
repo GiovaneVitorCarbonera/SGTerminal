@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
   res.sendFile(require('path').join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(8080, () => {
-  console.log('Servidor executando na porta 8080');
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Servidor executando na porta ${port}`);
 });
