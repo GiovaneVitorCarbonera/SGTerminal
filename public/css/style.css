@@ -1,0 +1,199 @@
+/* Variáveis de Cores Customizadas */
+:root {
+    --bg-dark-geometric: #121212;
+    --bg-solid-login: #1a1a1a;
+    --bg-dashboard: #0e1111;
+    --bg-card: #161a1d;
+    --input-bg: #22252a;
+    --btn-primary-dark: #212529;
+    --btn-signin-accent: #222222;
+    --border-subtle-rgba: rgba(255, 255, 255, 0.08);
+}
+
+/* ------------------ TELA DE LOGIN (IMAGEM 1) ------------------ */
+.bg-solid-login {
+    background-color: var(--bg-solid-login);
+}
+
+.tracking-wide {
+    letter-spacing: 0.5px;
+}
+
+/* Padrão Geométrico 3D Shards em CSS Puro para simular a Imagem 1 */
+.geometric-bg {
+    background-color: var(--bg-dark-geometric);
+    background-image: 
+        linear-gradient(135deg, #2c2c2c 25%, transparent 25%), 
+        linear-gradient(225deg, #1f1f1f 25%, transparent 25%), 
+        linear-gradient(45deg, #111111 25%, transparent 25%), 
+        linear-gradient(315deg, #0d0d0d 25%, #1a1a1a 25%);
+    background-position: 40px 0, 40px 0, 0 0, 0 0;
+    background-size: 80px 80px;
+    background-repeat: repeat;
+}
+
+.geometric-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(26,26,26,0.95) 100%);
+}
+
+/* Inputs da tela de login */
+.login-input-group {
+    border: 1px solid #333942;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bg-input-icon {
+    background-color: var(--input-bg) !important;
+    border: none !important;
+}
+
+.bg-input {
+    background-color: var(--input-bg) !important;
+    border: none !important;
+    font-size: 0.9rem;
+}
+
+.bg-input:focus {
+    box-shadow: none;
+    color: #fff;
+}
+
+.btn-signin {
+    background-color: var(--btn-signin-accent);
+    border: 1px solid #3c424b;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.btn-signin:hover {
+    background-color: #333333;
+    border-color: #555;
+}
+
+/* Divisores e Redes Sociais */
+.separator-line::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 0; width: 100%; height: 1px;
+    background-color: #333;
+    z-index: 0;
+}
+
+.social-icons-box .social-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--input-bg);
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.social-icons-box .social-btn:hover {
+    background-color: #2d3238;
+    border-color: #555;
+}
+
+
+/* ------------------ DASHBOARD (IMAGEM 2) ------------------ */
+.bg-dashboard {
+    background-color: var(--bg-dashboard);
+}
+
+.bg-card {
+    background-color: var(--bg-card);
+}
+
+/* Sidebar Navigation */
+.sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    background-color: #0b0d0e;
+}
+
+.xs-heading {
+    font-size: 0.68rem;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+}
+
+.sidebar-wrapper .nav-link {
+    color: #8a9099;
+    font-size: 0.92rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.sidebar-wrapper .nav-link:hover {
+    background-color: rgba(255,255,255,0.03);
+    color: #fff;
+}
+
+.sidebar-wrapper .nav-link.active {
+    background-color: rgba(255,255,255,0.07) !important;
+    color: #fff !important;
+    font-weight: 500;
+}
+
+/* Sub-tabs esteticas da imagem 2 */
+.sub-tab-nav .nav-link {
+    color: #8a9099;
+    font-size: 0.85rem;
+    border-bottom: 2px solid transparent;
+}
+
+.sub-tab-nav .nav-link.active {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+/* Tabelas Customizadas do Dashboard */
+.custom-dashboard-table {
+    margin-top: 10px;
+}
+
+.custom-dashboard-table thead th {
+    background-color: transparent;
+    color: #6c757d;
+    font-weight: 500;
+    font-size: 0.82rem;
+    text-transform: capitalize;
+    border-bottom: 1px solid var(--border-subtle-rgba);
+    padding: 12px 16px;
+}
+
+.custom-dashboard-table tbody tr {
+    border-bottom: 1px solid var(--border-subtle-rgba);
+    transition: background-color 0.15s;
+}
+
+.custom-dashboard-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.015);
+}
+
+.custom-dashboard-table tbody td {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    color: #e3e6e8;
+}
+
+/* Dropdown customizado nos 3 pontinhos */
+.action-dropdown-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.action-dropdown-btn:hover {
+    color: #fff;
+}
+
+.fs-xs {
+    font-size: 0.55rem;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Gestão</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dark text-light overflow-hidden">
+
+    <div class="container-fluid p-0 vh-100">
+        <div class="row g-0 h-100">
+            <div class="col-md-6 d-none d-md-block position-relative geometric-bg">
+                <div class="geometric-overlay"></div>
+            </div>
+            
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-solid-login">
+                <div class="login-form-container w-75 p-4" style="max-width: 480px;">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold m-0 tracking-wide">Welcome Back !</h2>
+                        <small class="text-muted">Sign in to your account</small>
+                    </div>
+
+                    <div id="login-alert" class="alert alert-danger d-none" role="alert"></div>
+
+                    <form id="form-login">
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small mb-1">Email / Usuário</label>
+                            <div class="input-group login-input-group">
+                                <span class="input-group-text bg-input-icon border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+                                <input type="text" id="usuario" class="form-control bg-input border-start-0 ps-1 text-white" placeholder="Enter your username or email" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small mb-1">Password</label>
+                            <div class="input-group login-input-group">
+                                <span class="input-group-text bg-input-icon border-end-0"><i class="bi bi-lock text-muted"></i></span>
+                                <input type="password" id="senha" class="form-control bg-input border-start-0 ps-1 text-white" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input rounded-0" id="agreeTerms" required>
+                            <label class="form-check-label text-muted small" for="agreeTerms">I agree with terms and conditions</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-signin w-100 fw-semibold text-white py-2 mb-4">Sign In</button>
+                    </form>
+
+                    <div class="position-relative text-center my-4 separator-line">
+                        <span class="bg-solid-login px-3 text-muted small position-relative z-1">or continue with</span>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3 social-icons-box mt-3">
+                        <button class="btn btn-outline-secondary social-btn"><i class="bi bi-triangle"></i></button>
+                        <button class="btn btn-outline-secondary social-btn"><i class="bi bi-square"></i></button>
+                        <button class="btn btn-outline-secondary social-btn"><i class="bi bi-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
