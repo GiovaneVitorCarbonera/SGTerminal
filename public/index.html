@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SG Terminal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <h1>SG Terminal</h1>
+      <p>Use esta interface para gerenciar contas e movimentações de veículos.</p>
+    </header>
+
+    <main>
+      <section id="login-section">
+        <h2>Login</h2>
+        <form id="login-form">
+          <label>
+            Usuário
+            <input id="username" type="text" autocomplete="username" required />
+          </label>
+          <label>
+            Senha
+            <input id="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Entrar</button>
+        </form>
+        <div id="login-message" class="message"></div>
+      </section>
+
+      <section id="dashboard-section" hidden>
+        <div class="top-bar">
+          <div class="nav-buttons">
+            <button id="nav-accounts" type="button">Contas</button>
+            <button id="nav-movements" type="button">Movimentações</button>
+          </div>
+          <button id="logout-button" type="button" class="secondary">Sair</button>
+        </div>
+        <div id="content"></div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

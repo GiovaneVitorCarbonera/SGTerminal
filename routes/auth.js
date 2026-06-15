@@ -26,7 +26,8 @@ const { secret } = require('../middleware/auth');
  *         description: Token JWT
  */
 router.post('/login', async (req, res) => {
-  const { usuario, senha } = req.body;
+  const body = req.body || {};
+  const { usuario, senha } = body;
 
   if (!usuario || !senha) {
     return res.status(400).json({ erro: 'usuario e senha são obrigatórios' });
