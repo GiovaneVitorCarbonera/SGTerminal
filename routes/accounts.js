@@ -206,30 +206,107 @@ router.delete(
 
 /**
  * @openapi
- * /accounts/{Id}:
+ * /accounts/{id}:
  *   put:
  *     tags:
  *       - Accounts
+ *     summary: Atualiza uma conta
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: Id
+ *       - name: id
  *         in: path
  *         required: true
+ *         description: ID da conta
  *         schema:
  *           type: integer
+ *           example: 1
  *     requestBody:
  *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - permissions
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: admin
+ *               password_hash:
+ *                 type: string
+ *                 nullable: true
+ *                 example: novaSenhaHash
+ *               permissions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example:
+ *                   - EDIT_USER
+ *                   - VIEW_USER
  *     responses:
  *       200:
- *         description: Lista contas
+ *         description: Conta atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 username:
+ *                   type: string
+ *                   example: admin
+ *                 permissions:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *       400:
+ *         description: Dados inválidos ou ID inválido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Dados inválidos
+ *       401:
+ *         description: Não autenticado
+ *       403:
+ *         description: Sem permissão para executar a ação
+ *       404:
+ *         description: Conta não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Conta não encontrada
+ *       500:
+ *         description: Erro interno ao atualizar conta
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Erro ao atualizar conta
  */
 router.put(
-  '/:Id',
+  '/:id',
   secureRoute,
   requirePermission([PERMISSIONS.EDIT_USER]),
   async (req, res) => {
-    const id = Number(req.params.Id);
+    const id = Number(req.params.id);
     const { username, password_hash, permissions } = req.body;
 
     if (!Number.isInteger(id)) {

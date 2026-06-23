@@ -245,12 +245,12 @@ router.delete('/:id', secureRoute, requirePermission([PERMISSIONS.DELETE_VEHICLE
  */
 router.put('/:id', secureRoute, requirePermission([PERMISSIONS.EDIT_VEHICLE_MOVEMENT]), async (req, res) => {
     const {id} = req.params;
-    const {idaccount, placa, datahora, tipo} = req.body;
+    const {idAccount, placa, datahora, tipo} = req.body;
 
     const sql = 'update veiculos set idaccount = $1, placa = $2, datahora = $3, tipo = $4 where id = $5';
 
     try{
-        const resultado = await db.query(sql, [idaccount, placa, datahora, tipo, id]);
+        const resultado = await db.query(sql, [idAccount, placa, datahora, tipo, id]);
 
         if(resultado.rowCount === 0){
             return res.status(404).json({

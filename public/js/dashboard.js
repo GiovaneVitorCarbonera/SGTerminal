@@ -316,7 +316,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById(`field-${field.name}`);
             if (el) {
                 if (field.name === 'permissions') {
-                    payload[field.name] = el.value.split(',').map(p => p.trim()).filter(p => p.length > 0);
+                    payload[field.name] = el.value
+                        .replace(/[{}]/g, '')
+                        .split(',')
+                        .map(p => p.trim())
+                        .filter(Boolean);
                 } else if (field.type === 'number') {
                     payload[field.name] = Number(el.value);
                 } else {
